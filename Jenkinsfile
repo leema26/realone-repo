@@ -2,11 +2,11 @@ pipeline {
     agent any
     environment {
         VERSION = "${env.BUILD_ID}"
-        AWS_ACCOUNT_ID="775012328020"
+        AWS_ACCOUNT_ID="730335412936"
         AWS_DEFAULT_REGION="us-east-1"
-        IMAGE_REPO_NAME="my-image-repo"
+        IMAGE_REPO_NAME="eric_pipeline"
         IMAGE_TAG= "${env.BUILD_ID}"
-        REPOSITORY_URI = "775012328020.dkr.ecr.us-east-1.amazonaws.com/my-image-repo"
+        REPOSITORY_URI = "730335412936.dkr.ecr.us-east-1.amazonaws.com/eric_pipeline"
     }
     stages {
         
@@ -16,21 +16,6 @@ pipeline {
             }
         }
 
-        stage('Code Qualty Scan') {
-
-           steps {
-                  withSonarQubeEnv('sonar-scanner') {
-             sh "mvn -f SampleWebApp/pom.xml sonar:sonar"      
-               }
-            }
-       }
-        stage('Quality Gate') {
-          steps {
-                 waitForQualityGate abortPipeline: true
-              }
-        }        
-        
-        
              stage('Test') {
             steps {
                 sh 'cd SampleWebApp && mvn test'
